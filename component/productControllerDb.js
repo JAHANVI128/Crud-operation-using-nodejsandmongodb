@@ -13,7 +13,7 @@ module.exports.addProduct = function (req, res) {
         "productName": productName,
         "price": price,
         "qty": qty,
-        "categoryId":categoryId
+        "categoryId": categoryId
     });
 
     product.save();
@@ -27,7 +27,7 @@ module.exports.addProduct = function (req, res) {
 
 module.exports.getAllProducts = function (req, res) {
 
-    ProductModel.find().then((data) => {
+    ProductModel.find().populate().exec().then((data) => {
         res.json({
             "msg": "Product List",
             "data": data,
@@ -40,19 +40,18 @@ module.exports.getAllProducts = function (req, res) {
             "rcode": -9
         })
     })
-
 }
 
-module.exports.getProductById = function(req,res){
+module.exports.getProductById = function(req,res) {
 
     let productId = req.params.productId
     ProductModel.findById({
-        _id:productId
+        _id: productId
     }).then((data) => {
         res.json({
-            "msg":"Product Ret.",
-            "data":data,
-            "rcode":200
+            "msg": "Product Ret.",
+            "data": data,
+            "rcode": 200
         })
     }).catch((err) => {
         res.json({
@@ -63,17 +62,17 @@ module.exports.getProductById = function(req,res){
     })
 }
 
-module.exports.deleteProductById = function(req,res){
+module.exports.deleteProductById = function (req, res) {
 
     let productId = req.params.productId
 
     ProductModel.findByIdAndDelete({
-        _id:productId
+        _id: productId
     }).then((data) => {
         res.json({
-            "msg":"Product Deleted",
-            "data":data,
-            "rcode":200
+            "msg": "Product Deleted",
+            "data": data,
+            "rcode": 200
         })
     }).catch((err) => {
         res.json({
@@ -84,33 +83,33 @@ module.exports.deleteProductById = function(req,res){
     })
 }
 
-module.exports.filterProducts = function(req,res){
-    
+module.exports.filterProducts = function (req, res) {
+
     let minPrice = req.body.minPrice
     let maxPrice = req.body.maxPrice
 
     ProductModel.find({
-        $and:[{
-            price:{
-                $gt:minPrice
+        $and: [{
+            price: {
+                $gt: minPrice
             }
-        },{
-            price:{
-                $lt:maxPrice
+        }, {
+            price: {
+                $lt: maxPrice
             }
         }]
     }).then((data) => {
-        if(data.length == 0){
+        if (data.length == 0) {
             res.json({
-                "msg":"No Data Found",
-                "data":req.body,
-                "rcode":-9
+                "msg": "No Data Found",
+                "data": req.body,
+                "rcode": -9
             })
-        }else{
+        } else {
             res.json({
-                "msg":"Product Filter",
-                "data":data,
-                "rcode":200
+                "msg": "Product Filter",
+                "data": data,
+                "rcode": 200
             })
         }
     }).catch((err) => {
@@ -122,28 +121,28 @@ module.exports.filterProducts = function(req,res){
     })
 }
 
-module.exports.updateProduct = function(req,res){
-    
+module.exports.updateProduct = function (req, res) {
+
     let productId = req.body.productId
     let price = req.body.price
     let qty = req.body.qty
 
     ProductModel.updateOne({
-        _id:productId,
-    },{
-        "price":price,
-        "qty":qty
+        _id: productId,
+    }, {
+        "price": price,
+        "qty": qty
     }).then((data) => {
         res.json({
-            "msg":"Product Updated",
-            "data":data,
-            "rcode":200
+            "msg": "Product Updated",
+            "data": data,
+            "rcode": 200
         })
     }).catch((err) => {
         res.json({
-            "msg":"Product Updation fails...",
-            "data":data,
-            "rcode":-9
+            "msg": "Product Updation fails...",
+            "data": data,
+            "rcode": -9
         })
     })
 }
