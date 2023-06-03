@@ -1,0 +1,32 @@
+# Directories
+node_modules/
+dist/
+build/
+
+# Logs and databases
+*.log
+*.sqlite
+
+# Environment variables
+.env
+
+# IDE and editor files
+.vscode/
+.idea/
+
+# Dependencies and build artifacts
+*.lock
+yarn-error.log
+yarn.lock
+
+# System files
+.DS_Store
+Thumbs.db
+
+# OS-specific files
+.DS_Store
+npm-debug.log*
+
+# Temporary files
+*.swp
+*.swo
