@@ -1,8 +1,8 @@
 const CsvReaderService = require('../services/csvreader')
 
-module.exports.uploadIndustry = function(req,res){
+module.exports.uploadIndustry = async function(req,res){
 
-    let allIndustry = CsvReaderService.uploadIndustry()
+    let allIndustry = await CsvReaderService.uploadIndustry()
     res.json({
         data:allIndustry,
         msg:"Industries uploaded",

@@ -1,6 +1,8 @@
 const fs = require("fs")
 const CsvReader = require("csv-reader");
 const { log } = require("console");
+const { resolve } = require("path");
+const { uploadIndustry } = require("../controller/industryController");
 
 function readFile() {
 
@@ -32,26 +34,32 @@ function readFile() {
 //     });
 //   }
 
-module.exports.uploadIndustry = function() {
+module.exports.uploadIndustry = async function() {
 
     let industryArray = [];
     let myFile = fs.createReadStream("C:\\Users\\JAHANVI\\OneDrive\\Desktop\\ROYAL\\MEAN\\seed\\ind_nifty50list.csv", "utf-8")
     
-    myFile.pipe(new CsvReader()).on('data',function(row){
-
-        // let ind = row[1];
-        // industryArray.push(ind)
-
-        if(industryArray.indexOf(row[1].toLowerCase()) == -1){
-            industryArray.push(row[1].toLowerCase)
-        }
-
-    }).on('end',function(end){
-
-        console.log(industryArray);
-        console.log("\n"+industryArray.length);
-        return industryArray;
+    let promise = new Promise(resolve,reject,() => {
+        
+        myFile.pipe(new CsvReader()).on('data',function(row){
+    
+            // let ind = row[1];
+            // industryArray.push(ind)
+    
+            if(industryArray.indexOf(row[1].toLowerCase()) == -1){
+                industryArray.push(row[1].toLowerCase)
+            }
+    
+        }).on('end',function(end){
+    
+            console.log(industryArray);
+            console.log("\n"+industryArray.length);
+            // return industryArray;
+            resolve(industryArray)
+        })
+    
     })
-
+    let data = await promise;
     console.log("THE END");
+    return data;
 }

@@ -1,9 +1,9 @@
 const express = require("express")
 const mongoose = require("mongoose")
-const productController = require("./component/productController")
-const categoryController = require("./component/categoryController")
-const productControllerDb = require("./component/productControllerDb")
-const categoryControllerDb = require("./component/categoryControllerDb")
+const productController = require("./controller/productController")
+const categoryController = require("./controller/categoryController")
+const productControllerDb = require("./controller/productControllerDb")
+const categoryControllerDb = require("./controller/categoryControllerDb")
 const { uploadIndustry } = require("./controller/industryController")
 const industryController = require("./controller/industryController")
 
@@ -31,4 +31,6 @@ app.post("/getallcategory",categoryControllerDb.getAllCategory)
 
 
 app.post("/industry",industryController.uploadIndustry)
+
+
 app.listen(9999)
