@@ -4,6 +4,8 @@ const productController = require("./component/productController")
 const categoryController = require("./component/categoryController")
 const productControllerDb = require("./component/productControllerDb")
 const categoryControllerDb = require("./component/categoryControllerDb")
+const { uploadIndustry } = require("./controller/industryController")
+const industryController = require("./controller/industryController")
 
 const app = express()
 
@@ -27,4 +29,6 @@ app.put("/product",productControllerDb.updateProduct)
 app.post("/addcategory",categoryController.addCategory)
 app.post("/getallcategory",categoryControllerDb.getAllCategory)
 
+
+app.post("/industry",industryController.uploadIndustry)
 app.listen(9999)
