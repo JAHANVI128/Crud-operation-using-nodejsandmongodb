@@ -4,7 +4,7 @@ const IndustryModel = require("../model/industryModel");
 
 function readFile() {
 
-    let myfile = fs.createReadStream("C:\\Users\\JAHANVI\\OneDrive\\Desktop\\ROYAL\\MEAN\\seed\\ind_nifty50list.csv", "utf-8")
+    let myfile = fs.createReadStream("./seed/ind_nifty50list.csv", "utf-8")
 
     myfile.pipe(new CsvReader({
         parseNumbers: true,
@@ -37,7 +37,7 @@ function readFile() {
 module.exports.uploadIndustry = async function() {
 
     let industryArray = [];
-    let myFile = fs.createReadStream("C:\\Users\\JAHANVI\\OneDrive\\Desktop\\ROYAL\\MEAN\\seed\\ind_nifty50list.csv", "utf-8")
+    let myFile = fs.createReadStream("./seed/ind_nifty50list.csv", "utf-8")
     let myDataFromDb = [] 
     
     IndustryModel.find().then(data => {
@@ -91,26 +91,26 @@ module.exports.uploadIndustry = async function() {
 module.exports.uploadEquity = async function() {
 
     let eqArray = [];
-    let myFile = fs.createReadStream("C:\\Users\\JAHANVI\\OneDrive\\Desktop\\ROYAL\\MEAN\\seed\\ind_nifty50list.csv", "utf-8")
+    let myFile = fs.createReadStream("./seed/ind_nifty50list.csv", "utf-8")
+    let industryDb = [];
+
+    IndustryModel.find().then(data => {
+        industryDb = data;
+    })
   
     let promise = new Promise((resolve,reject) => {
         
         myFile.pipe(new CsvReader()).on('data',function(row){
 
             let industryName = row[1]
-            IndustryModel.findOne({
-                name:industryName
-            }).then(data => {
-                if(data){
-                    let eq ={
-                        name:row[0],
-                        symbol:row[2],
-                        isin:row[4],
-                        industry:data._id
-                    }
-                    eqArray.push(eq);
-                }
-            })
+            
+            let eq ={
+                name:row[0],
+                symbol:row[2],
+                isin:row[4],
+                industry:data._id
+            }
+            eqArray.push(eq);
     
         }).on('end',function(end){
     
