@@ -103,15 +103,20 @@ module.exports.uploadEquity = async function() {
         myFile.pipe(new CsvReader()).on('data',function(row){
 
             let industryName = row[1]
-            
-            let eq ={
-                name:row[0],
-                symbol:row[2],
-                isin:row[4],
-                industry:data._id
+
+            for(let i=0;i<industryDb.length;i++){
+                if(industryDb[i].name.toLowerCase() == industryName.toLowerCase()){
+
+                    let eq ={
+                        name:row[0],
+                        symbol:row[2],
+                        isin:row[4],
+                        industry:industryDb[i]._id
+                    }
+                    eqArray.push(eq);
+                }
             }
-            eqArray.push(eq);
-    
+      
         }).on('end',function(end){
     
             resolve(eqArray)
