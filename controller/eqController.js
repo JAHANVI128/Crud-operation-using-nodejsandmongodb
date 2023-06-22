@@ -27,6 +27,8 @@ module.exports.getAllEquity = function(req,res){
             res.status(302).json({    
                 msg:"Something Went Wrong",
                 data:err
-        })             
+            })             
+        })
     })
 }
+
