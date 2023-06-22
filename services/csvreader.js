@@ -1,6 +1,7 @@
 const fs = require("fs")
 const CsvReader = require("csv-reader");
 const IndustryModel = require("../model/industryModel");
+const EqModel = require("../model/eqModel")
 
 function readFile() {
 
@@ -93,11 +94,19 @@ module.exports.uploadEquity = async function() {
     let eqArray = [];
     let myFile = fs.createReadStream("./seed/ind_nifty50list.csv", "utf-8")
     let industryDb = [];
+    let equityDb = [];
 
     IndustryModel.find().then(data => {
         industryDb = data;
     })
   
+    EqModel.find().then( data => {
+        // equityDb = data;
+        data.forEach(item => equityDb.push(item.name))
+        console.log("equityDb");
+        console.log(equityDb);
+    })
+
     let promise = new Promise((resolve,reject) => {
         
         myFile.pipe(new CsvReader()).on('data',function(row){
@@ -105,13 +114,13 @@ module.exports.uploadEquity = async function() {
             let industryName = row[1]
 
             for(let i=0;i<industryDb.length;i++){
-                if(industryDb[i].name.toLowerCase() == industryName.toLowerCase()){
+                if(industryDb[i].name.toLowerCase() == industryName.toLowerCase() && eqArray.indexOf(row[0].toLowerCase()) == -1){
 
                     let eq ={
                         name:row[0],
                         symbol:row[2],
                         isin:row[4],
-                        industry:industryDb[i]._id
+                        industryId:industryDb[i]._id
                     }
                     eqArray.push(eq);
                 }
@@ -119,6 +128,12 @@ module.exports.uploadEquity = async function() {
       
         }).on('end',function(end){
     
+            // for( let j=0;j<equityDb.length;j++){
+            //     if(equityDb[j].name.toLowerCase() == row[0].toLowerCase()){
+
+            //     }
+            // }
+
             resolve(eqArray)
         })
     

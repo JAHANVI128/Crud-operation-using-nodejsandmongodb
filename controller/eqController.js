@@ -16,3 +16,17 @@ module.exports.uploadEquity = async function(req,res){
         })
     })
 }
+
+module.exports.getAllEquity = function(req,res){
+
+    EqModel.find().populate("industryId").exec().then(data => {
+        res.status(200).json({    //502   400
+            msg:"Equity Retrieved",
+            data:data
+        }).catch(err => {         //.status(200)
+            res.status(302).json({    
+                msg:"Something Went Wrong",
+                data:err
+        })             
+    })
+}

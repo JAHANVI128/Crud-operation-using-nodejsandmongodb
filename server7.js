@@ -39,6 +39,6 @@ app.post("/industry",industryController.uploadIndustry)
 //equity routes
 
 app.post("/equity",eqController.uploadEquity)
-
+app.get("/equity",eqController.getAllEquity)
 
 app.listen(9999)
