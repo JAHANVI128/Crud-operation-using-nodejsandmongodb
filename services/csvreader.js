@@ -100,11 +100,10 @@ module.exports.uploadEquity = async function() {
         industryDb = data;
     })
   
-    EqModel.find().then( data => {
+    await EqModel.find().then( data => {
         // equityDb = data;
         data.forEach(item => equityDb.push(item.name))
-        console.log("equityDb");
-        console.log(equityDb);
+        
     })
 
     let promise = new Promise((resolve,reject) => {
@@ -112,9 +111,11 @@ module.exports.uploadEquity = async function() {
         myFile.pipe(new CsvReader()).on('data',function(row){
 
             let industryName = row[1]
+            console.log("equityDb");
+            console.log(equityDb);
 
             for(let i=0;i<industryDb.length;i++){
-                if(industryDb[i].name.toLowerCase() == industryName.toLowerCase() && eqArray.indexOf(row[0].toLowerCase()) == -1){
+                if(industryDb[i].name.toLowerCase() == industryName.toLowerCase() && equityDb.indexOf(row[0].toLowerCase()) == -1){
 
                     let eq ={
                         name:row[0],

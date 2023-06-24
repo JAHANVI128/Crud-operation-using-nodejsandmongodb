@@ -4,8 +4,6 @@ const CsvReaderService = require('../services/csvreader')
 module.exports.uploadEquity = async function(req,res){
 
     let allEq = await CsvReaderService.uploadEquity()
-    console.log("allEquity => ");
-    console.log(allEq);
 
     EqModel.insertMany(allEq).then(data => {
 
