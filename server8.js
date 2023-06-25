@@ -14,7 +14,18 @@ const mystorage = multer.diskStorage({
 
 const upload = multer({
     // dest:'uploads/'
-    storage:mystorage
+    storage:mystorage,
+    fileFilter:function(req,file,cb){
+        if(file.mimetype == "image/jpeg" || file.mimetype == "image/x-png"){
+            cb(null,true);
+        } else{
+            cb(null,false);
+            cb(new Error("Valid Extensions are jpeg/png"))
+        }
+    },
+    limits:{
+        fileSize:1024*1024*12
+    }
 })
 
 app.post('/signup',upload.single('profilepic'),function(req,res){
