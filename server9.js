@@ -4,6 +4,7 @@ const productRoute = require("./routes/product.routes")
 const mongoose = require("mongoose")
 const categoryController = require("./controller/categoryController")
 const categoryControllerDb = require("./controller/categoryControllerDb")
+const categoryRoute = require("./routes/category.routes")
 
 //middle 
 
@@ -16,8 +17,7 @@ app.use("/admin",productRoute)
 
 //category routes
 
-app.post("/addcategory",categoryController.addCategory)
-app.post("/getallcategory",categoryControllerDb.getAllCategory)
+app.use("/admin",categoryRoute)
 
 //http://localhost:9999/admin/
 
