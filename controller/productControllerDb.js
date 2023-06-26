@@ -27,13 +27,14 @@ module.exports.addProduct = function (req, res) {
 
 module.exports.getAllProducts = function (req, res) {
 
-    ProductModel.find().populate().exec().then((data) => {
+    ProductModel.find().populate("categoryId").exec().then((data) => {
         res.json({
             "msg": "Product List",
             "data": data,
             "rcode": 200
         })
     }).catch((err) => {
+        console.log(err);
         res.json({
             "msg": "Something want wrong",
             "data": err,
