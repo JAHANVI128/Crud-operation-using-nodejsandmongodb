@@ -14,7 +14,13 @@ app.use(express.urlencoded({
 }))
 app.use(express.json())
 
-mongoose.connect("mongodb://localhost:27017/mean23").then(() => {
+// mongoose.connect("mongodb://localhost:27017/mean23").then(() => {
+//     console.log("Dbconnected....")
+// })
+
+let dbUrl = "mongodb+srv://root:jairootjairoot@cluster0.u62v97c.mongodb.net/?retryWrites=true&w=majority"
+
+mongoose.connect(dbUrl).then(() => {
     console.log("Dbconnected....")
 })
 
