@@ -13,6 +13,7 @@ module.exports.addCategory = function(req,res){
             "rcode":200
         })
     }).catch((err) => {
+        console.log(err);
         res.json({
             "msg":"Something Want Wrong",
             "data":err,

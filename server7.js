@@ -14,7 +14,7 @@ app.use(express.urlencoded({
 }))
 app.use(express.json())
 
-// mongoose.connect("mongodb://localhost:27017/mean23").then(() => {
+// mongoose.connect("mongodb://127.0.0.1:27017/mean23").then(() => {
 //     console.log("Dbconnected....")
 // })
 
