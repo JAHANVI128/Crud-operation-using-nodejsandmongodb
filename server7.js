@@ -6,6 +6,7 @@ const productControllerDb = require("./controller/productControllerDb")
 const categoryControllerDb = require("./controller/categoryControllerDb")
 const industryController = require("./controller/industryController")
 const eqController = require("./controller/eqController")
+const cors = require("cors")
 
 const app = express()
 
@@ -13,6 +14,7 @@ app.use(express.urlencoded({
     extended:true
 }))
 app.use(express.json())
+app.use(cors())
 
 // mongoose.connect("mongodb://127.0.0.1:27017/mean23").then(() => {
 //     console.log("Dbconnected....")
